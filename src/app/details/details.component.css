@@ -92,59 +92,64 @@ h2 {
   transition: background-color 0.3s ease;
 }
 
+.btn-primary:disabled {
+  background-color: #333; /* Darker color when the button is disabled */
+  color: #aaa; /* Lighter text color for disabled state */
+  cursor: not-allowed; /* Change cursor on disabled state */
+}
+
 .btn-primary:hover {
   background-color: #ff0f23; /* Darker red on hover */
 }
 
-/* Style the comment section */
-.comment-section {
-  background-color: #000; /* Updated background color */
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 30px;
-  margin-left: -15px; /* Adjust the left margin to pull the section slightly to the left */
-  margin-right: -15px; /* Adjust the right margin to match the left */
-}
 
-.comment {
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: #222; /* Darker background */
-  border-radius: 8px;
-  margin-left: 0; /* Reset left margin */
-  margin-right: 0; /* Reset right margin */
-}
 
-.comment-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.comment-header strong {
+.film-details {
+  background-color: black;
   color: white;
+  padding: 20px;
+  border-radius: 10px;
+  /* Add more styles as needed */
+}
+
+.film-details h2 {
+  font-size: 1.7em;
+  /* Additional styles */
+}
+
+.film-details p {
+  font-size: 1.1em;
+  /* Additional styles */
+}
+
+.film-details .lead {
+  font-size: 1.1em;
+  font-weight: bold;
+  /* Additional styles */
+}
+
+.film-details strong {
+  font-weight: bold;
+  /* Additional styles */
+}
+
+.additional-info {
+  margin-top: 20px;
+  /* Additional styles */
+}
+
+.tagline {
+  font-size: 1.9em;
+  font-style: italic;
+  color: #FFD700; /* Golden color */
+  margin-bottom: 10px;
+  /* You can add additional styles, such as animation or shadows */
+}
+
+.tagline strong {
   font-weight: bold;
 }
 
-.comment-header button {
-  background-color: #e50914;
-  border: none;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 4px;
-}
-
-.comment-body {
-  color: white;
-}
-
-.comment-body p {
-  margin: 0;
-}
-
-.comment-body p {
-  margin: 0;
-}
 
 
 
@@ -162,33 +167,12 @@ h2 {
 
 
 
-
-
-/*
-
-
-
-
-
-
-
-!* Custom styles for comments section *!
-.comments-container {
-  background-color: #141414; !* Netflix background color *!
-  color: #fff; !* Text color *!
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.comments-heading {
-  margin-bottom: 20px;
-}
 
 .comment {
-  margin-bottom: 20px;
   padding: 15px;
-  background-color: #1f1f1f; !* Darker background for each comment *!
+  background-color: #1f1f1f;
   border-radius: 8px;
+  margin-bottom: 20px;
 }
 
 .comment-header {
@@ -198,11 +182,29 @@ h2 {
   margin-bottom: 10px;
 }
 
-.comment-name {
-  font-weight: bold;
+.comment-header .profile-icon {
+  margin-right: 10px;
 }
 
-.comment-content {
-  color: #ccc; !* Comment text color *!
+.profile-icon .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2em;
 }
-*/
+
+.comment-info {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.comment-actions {
+  margin-left: auto;
+}

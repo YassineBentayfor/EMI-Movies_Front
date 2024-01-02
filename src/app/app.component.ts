@@ -24,8 +24,9 @@ export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   userSub: Subscription;
   constructor(
-    private router: Router,
     private userLoginService: UsersloginService,
+    private router: Router,
+
     public dialog: MatDialog,
     private filmService: FilmService
   ) {}

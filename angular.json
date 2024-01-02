@@ -10,10 +10,10 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
-        "build": {
+        "build": {cd
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/movie-app",
+            "outputPath": "frontend/angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [

@@ -50,6 +50,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.userSub = this.userLoginService.userSubject.subscribe((user) => {
       console.log('user', user);
       this.isAuthenticated = !!user;
+
+      // Automatically populate the email field if the user is authenticated
+      if (this.isAuthenticated) {
+        const userEmail = this.userLoginService.getEmailFromLocalStorage();
+        // Extract the text before '@' symbol and set it in the form data
+        this.formData.nom = userEmail.split('@')[0];
+      }
     });
     this.getPopularMoviesById();
     this.getCommentaire();
@@ -63,6 +70,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
       // Use the id as needed, for example, call your service method
       this.getCommentaireFiltred(id);
     });
+    if (this.isAuthenticated) {
+      const userEmail = this.userLoginService.getEmailFromLocalStorage();
+      this.formData.nom = userEmail; // Set the email in the form data
+    }
   }
 
   submit_commentaire() {
@@ -155,4 +166,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  //AVATAR
+  // Inside your component.ts file
+  getInitial(name: string): string {
+    if (name) {
+      const initials = name.charAt(0).toUpperCase();
+      return initials;
+    }
+    return '';
+  }
+
 }
