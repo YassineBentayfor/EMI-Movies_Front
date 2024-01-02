@@ -8,6 +8,8 @@ import {HomeFilmComponent} from "../home-film/home-film.component";
 import {NgFor} from "@angular/common";
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs';
+import {UsersloginService} from "../Service/users.login.service";
+import {FavoriteMovies} from "../Model/FavoriteMovies";
 
 
 @Component({
@@ -27,14 +29,54 @@ export class FavoritedComponent implements OnInit {
   favoriteMovies: Film[] = [];
 
 
-  constructor(private filmService: FilmService) { }
+  constructor(private filmService: FilmService, private userService: UsersloginService) { }
 
   ngOnInit(): void {
     this.loadFavoriteMovies();
     console.log(this.favoriteMovies);
   }
 
+
+
   loadFavoriteMovies() {
+    const userEmail: string = this.userService.getEmailFromLocalStorage(); // Retrieve user's email from the appropriate source (UserService or local storage)
+    console.log('Fetching favorite movies for user with email:', userEmail);
+
+    this.filmService.getFavoriteMovieIdsByEmail(userEmail).subscribe(
+      (movieIds: number[]) => {
+        console.log('Favorite movie IDs:', movieIds);
+        const requests: Observable<any>[] = [];
+
+        for (let i = 0; i < movieIds.length; i++) {
+          const movieId = movieIds[i]; // Assuming the movieId field holds the ID
+          console.log('Fetching details for movie ID:', movieId);
+
+          const request = this.filmService.getPopularMoviesById(movieId);
+          requests.push(request);
+        }
+        if (requests.length > 0) {
+          forkJoin(requests).subscribe((movies: any[]) => {
+            console.log('Favorite movies details:', movies);
+
+            for (let i = 0; i < movies.length; i++) {
+              this.favoriteMovies.push(movies[i]);
+            }
+
+            console.log(this.favoriteMovies); // Verify favoriteMovies array here
+          }, error => {
+            console.error('Error fetching favorite movies details:', error);
+          });
+        // You can handle/use the retrieved movie IDs as needed
+      } else {
+      console.log('No favorite movie IDs found.');
+    }
+  });
+}
+
+
+
+
+  loadFavoriteMoviessss() {
     console.log('Fetching favorite movie IDs...');
     this.filmService.getFavoriteMovieIds().subscribe((ids: any[]) => {
       console.log('Received favorite movie IDs:', ids);
@@ -69,22 +111,6 @@ export class FavoritedComponent implements OnInit {
 
 
 
-
-
-
-
-  getFavoriteMoviesDetails() {
-    const requests = this.favoriteMovieIds.map(id =>
-      this.filmService.getPopularMoviesById(id)
-    );
-
-    if (requests.length > 0) {
-      forkJoin(requests).subscribe((results: any[]) => {
-        this.favoriteMovies = results;
-      });
-    }
-  }
-
   onFavoriteRemoved(movieId: number) {
     console.log('Removing favorite movie with ID:', movieId);
 
@@ -96,5 +122,16 @@ export class FavoritedComponent implements OnInit {
       this.favoriteMovies.splice(indexToRemove, 1);
     }
   }
+
+
+
+
+
+
+
+
+
+
+
 
 }

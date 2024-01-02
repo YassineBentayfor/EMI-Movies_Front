@@ -33,11 +33,29 @@ export class FilmService {
       })
     );
   }
+  getFavoriteMovieIdsByEmail(email: string): Observable<number[]> {
+    return this.http.get<any[]>(`${this.favoritesUrl}/favorite/${email}`).pipe(
+      map((response: any[]) => {
+        console.log('Received favorite movie IDs for email', email, ':', response);
+
+        const movieIds: number[] = response.map(movie => movie.movieId);
+        console.log('Extracted movie IDs:', movieIds);
+
+        return movieIds; // Return extracted movie IDs associated with the email
+      })
+    );
+  }
+
 
   // Add a movie to favorites
-  addFavoriteMovie(movieId: number): Observable<any> {
+  addFavoriteMovieee(movieId: number): Observable<any> {
     return this.http.post<any>(`${this.favoritesUrl}/add/${movieId}`, {});
   }
+
+  addFavoriteMovie(movieId: number, email: string): Observable<any> {
+    return this.http.post<any>(`${this.favoritesUrl}/add/${movieId}/${email}`, {});
+  }
+
 
   // Remove a movie from favorites
   removeFavoriteMovie(id: number): Observable<any> {
@@ -76,6 +94,17 @@ export class FilmService {
     // Use forkJoin to make parallel requests and combine results
     return forkJoin(requests);
   }
+
+  //######################################""
+  getFavoriteMoviesByEmail(email: string): Observable<any[]> {
+    const url = `${this.favoritesUrl}/favorite/user`;
+
+    return this.http.get<any[]>(url, { params: { email } });
+  }
+
+
+
+  //######################################""
 
 
   getPopularMoviesById(id: number): Observable<any> {

@@ -158,6 +158,11 @@ export class UsersloginService {
     }
     return throwError(() => errorMessage);
   }
+
+
+  getEmailFromLocalStorage(): string {
+    return this.userSubject.value.email;
+  }
 }
 
 //   // Authenticate a user based on provided email and password
