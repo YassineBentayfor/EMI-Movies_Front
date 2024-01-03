@@ -122,24 +122,42 @@ export class DetailsComponent implements OnInit, OnDestroy {
     });
   }
   getCommentaireFiltred(idFilm: number) {
-    console.log('now poe ', this.filmId);
+    console.log('now ', this.filmId);
     this.filmservice.getCommentaireFiltred(idFilm).subscribe((result) => {
       this.commentaireFiltred = result;
     });
+    console.log(this.commentaireFiltred)
   }
   deleteComment(id: number) {
-    this.filmservice.deleteComment(id).subscribe(
-      (response) => {
-        // Handle success if needed
-        console.log('Comment deleted successfully', response);
-        // Refresh comment data after adding a new comment
-        this.getCommentaireFiltred(this.filmId);
-      },
-      (error) => {
-        // Handle error if needed
-        console.error('Error adding comment', error);
-      }
-    );
+    if (!this.isAuthenticated ){
+      this.filmservice.deleteComment(id).subscribe(
+        (response) => {
+          // Handle success if needed
+          console.log('Comment deleted successfully', response);
+          // Refresh comment data after adding a new comment
+          this.getCommentaireFiltred(this.filmId);
+        },
+        (error) => {
+          // Handle error if needed
+          console.error('Error adding comment', error);
+        }
+      );
+    }
+    if(this.commentaire.name == this.userLoginService.getEmailFromLocalStorage()){
+      this.filmservice.deleteComment(id).subscribe(
+        (response) => {
+          // Handle success if needed
+          console.log('Comment deleted successfully', response);
+          // Refresh comment data after adding a new comment
+          this.getCommentaireFiltred(this.filmId);
+        },
+        (error) => {
+          // Handle error if needed
+          console.error('Error adding comment', error);
+        }
+      );
+    }
+
   }
 
 

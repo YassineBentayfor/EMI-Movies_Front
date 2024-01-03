@@ -1,8 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Film Details</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
 
-
-
-
+<body>
 <div class="container mt-2">
   <div class="row">
     <div class="col-md-4">
@@ -12,36 +21,29 @@
       </div>
     </div>
     <div class="col-md-8">
-      <div class="film-details" style="background-color: black; color: white; padding: 20px;">
-        <h2 class="mb-4">{{ filmdetails.title }}</h2>
-        <p class="lead"><strong>Release Date:</strong> {{ filmdetails.release_date }}</p>
-        <p class="tagline"><strong></strong> {{ filmdetails.tagline }}</p>
-        <p><strong></strong> {{ filmdetails.overview }}</p>
-        &nbsp;&nbsp; &nbsp;
-        <p><strong>Runtime:</strong> {{ filmdetails.runtime }} minutes</p>
-        <p><strong>Popularity:</strong> {{ filmdetails.popularity }}</p>
-        <p><strong>Vote Average:</strong> {{ filmdetails.vote_average }}</p>
+      <h2 class="mb-4">{{ filmdetails.title }}</h2>
+      <p class="lead"><strong>Release Date:</strong> {{ filmdetails.release_date }}</p>
+      <p class="tagline"><strong></strong> {{ filmdetails.tagline }}</p>
+      <p><strong></strong> {{ filmdetails.overview }}</p>
+      &nbsp;&nbsp; &nbsp;
+      <p><strong>Runtime:</strong> {{ filmdetails.runtime }} minutes</p>
+      <p><strong>Popularity:</strong> {{ filmdetails.popularity }}</p>
+      <p><strong>Vote Average:</strong> {{ filmdetails.vote_average }}</p>
 
-        <p><strong>Budget:</strong> {{ filmdetails.budget }}$</p>
+      <p><strong>Budget:</strong> {{ filmdetails.budget }}$</p>
 
-        <!-- Additional Information -->
-        <div class="additional-info">
-          <p><strong>Original Title:</strong> {{ filmdetails.original_title }}</p>
-          <p><strong>Language:</strong> {{ filmdetails.original_language }}</p>
-          <p><strong>Adult:</strong> {{ filmdetails.adult ? 'Yes' : 'No' }}</p>
-          <p><strong>Vote Count:</strong> {{ filmdetails.vote_count }}</p>
-          <!-- Add more details as needed -->
-        </div>
+      <!-- Additional Information -->
+      <div class="additional-info">
+        <p><strong>Original Title:</strong> {{ filmdetails.original_title }}</p>
+        <p><strong>Language:</strong> {{ filmdetails.original_language }}</p>
+        <p><strong>Adult:</strong> {{ filmdetails.adult ? 'Yes' : 'No' }}</p>
+        <p><strong>Vote Count:</strong> {{ filmdetails.vote_count }}</p>
+        <!-- Add more details as needed -->
       </div>
-
       <div *ngFor="let gn of genre" class="d-inline-block mr-2">
         <span class="badge badge-primary">{{ gn.name }}</span>
       </div>
-      <!--<div class="NgxEditor__Wrapper mb-5 mt-2" style="height: 200px">
-        <ngx-editor-menu [editor]="editor" > </ngx-editor-menu>
-        <ngx-editor [editor]="editor" [ngModel]="html"  [disabled]="false"  [placeholder]="'Type here...'"></ngx-editor>
-      </div>
-      <button class="btn btn-primary" (click)="submitEditorContent()">Submit Content</button>-->
+
 
     </div>
   </div>
@@ -55,15 +57,16 @@
   <div class="row">
     <div class="col-md-8">
       <h3 class="mb-3"></h3>
-      <!-- Add a form for submitting comments -->
+
       <form (ngSubmit)="submit_commentaire()" #commentForm="ngForm">
         <div class="mb-3">
-          <label for="nom" class="form-label">Email</label>
-          <input type="text" class="form-control" id="nom" [(ngModel)]="formData.nom" name="nom" [readonly]="isAuthenticated" placeholder="Enter a Title">
+          <label for="nom" class="form-label" >Title</label>
+          <input type="text" class="form-control" id="nom" [(ngModel)]="formData.nom" name="nom" required placeholder="Enter a Title"  >
         </div>
         <div class="mb-3">
           <label for="comment" class="form-label">Leave a Comment:</label>
           <div class="ngx-editor-container">
+            <ngx-editor-menu [editor]="editor" class="ngx-editor-content"></ngx-editor-menu>
             <ngx-editor
               style="height: 200px"
               [editor]="editor"
@@ -76,17 +79,13 @@
               required
             ></ngx-editor>
           </div>
-          <div *ngIf="commentForm.controls['comment']?.invalid && (commentForm.controls['comment']?.dirty || commentForm.controls['comment']?.touched)">
-            <small class="text-danger">Please enter a comment.</small>
-          </div>
         </div>
 
         <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid || !formData.comment" (click)="onAddComment()">Submit Comment</button>
       </form>
     </div>
-  </div>
-</div>
 
+  </div>
 
 
   <div class="container mt-4 mb-4">
@@ -100,12 +99,7 @@
           <div class="comment-info">
             <strong>{{ comment.name }}</strong>
             <div class="comment-actions">
-              <button
-                *ngIf="comment.name === userLoginService.getEmailFromLocalStorage()"
-                type="button"
-                class="btn btn-danger"
-                (click)="deleteComment(comment.id)"
-              >
+              <button type="button" class="btn btn-danger" (click)="deleteComment(comment.id)">
                 Delete
               </button>
             </div>
@@ -118,3 +112,5 @@
     </div>
   </div>
 
+
+</div>
