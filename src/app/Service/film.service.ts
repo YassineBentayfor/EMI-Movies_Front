@@ -48,10 +48,6 @@ export class FilmService {
 
 
   // Add a movie to favorites
-  addFavoriteMovieee(movieId: number): Observable<any> {
-    return this.http.post<any>(`${this.favoritesUrl}/add/${movieId}`, {});
-  }
-
   addFavoriteMovie(movieId: number, email: string): Observable<any> {
     return this.http.post<any>(`${this.favoritesUrl}/add/${movieId}/${email}`, {});
   }
@@ -79,9 +75,13 @@ export class FilmService {
     return this.http.delete<any>(`${this.secondBaseUrl}/delete/${id}`);
   }
 
-  getPopularMoviees(): Observable<any> {
-    return this.http.get<any>(`${this.baseurl}?api_key=${this.apikey}&page=4`);
-  }
+
+
+
+
+
+
+
   getPopularMovies(): Observable<any> {
     const requests: Observable<any>[] = [];
 
@@ -96,11 +96,6 @@ export class FilmService {
   }
 
   //######################################""
-  getFavoriteMoviesByEmail(email: string): Observable<any[]> {
-    const url = `${this.favoritesUrl}/favorite/user`;
-
-    return this.http.get<any[]>(url, { params: { email } });
-  }
 
 
 

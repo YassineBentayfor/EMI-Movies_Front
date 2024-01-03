@@ -37,7 +37,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private router: Router,
-    private userLoginService: UsersloginService
+    protected userLoginService: UsersloginService
   ) {
     this.form = this.formBuilder.group({
       nom: ['', Validators.required], // Add validators for required fields
@@ -141,6 +141,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+
 
   ngOnDestroy(): void {
     this.editor.destroy();
