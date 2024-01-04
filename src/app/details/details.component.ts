@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilmService } from '../Service/film.service';
-import { Filmdetails } from '../Model/filmdetails';
+import { FilmDetails } from '../Model/filmDetails';
 import { Genre } from '../Model/genre';
 import { CommonModule } from '@angular/common';
 import { Editor, NgxEditorModule, Validators } from 'ngx-editor';
@@ -94,7 +94,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  filmdetails!: Filmdetails;
+  filmdetails!: FilmDetails;
   commentaire!: Commentaire;
   commentaireFiltred!: Commentaire[];
   filmId!: number;
@@ -103,9 +103,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   //text editor
   editor!: Editor;
   html: string = 'hello world';
-  /*form = new FormGroup({
-    editorContent: new FormControl('', Validators.required()),
-  });*/
+
 
   getPopularMoviesById() {
     //get details
@@ -129,7 +127,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
     console.log(this.commentaireFiltred)
   }
   deleteComment(id: number) {
-    if (!this.isAuthenticated ){
       this.filmservice.deleteComment(id).subscribe(
         (response) => {
           // Handle success if needed
@@ -138,25 +135,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
           this.getCommentaireFiltred(this.filmId);
         },
         (error) => {
-          // Handle error if needed
           console.error('Error adding comment', error);
         }
       );
-    }
-    if(this.commentaire.name == this.userLoginService.getEmailFromLocalStorage()){
-      this.filmservice.deleteComment(id).subscribe(
-        (response) => {
-          // Handle success if needed
-          console.log('Comment deleted successfully', response);
-          // Refresh comment data after adding a new comment
-          this.getCommentaireFiltred(this.filmId);
-        },
-        (error) => {
-          // Handle error if needed
-          console.error('Error adding comment', error);
-        }
-      );
-    }
+
 
   }
 

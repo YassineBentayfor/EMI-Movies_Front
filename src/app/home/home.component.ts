@@ -5,7 +5,7 @@ import { FilmService } from "../Service/film.service";
 import {HomeFilmComponent} from "../home-film/home-film.component";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import {Filmdetails} from "../Model/filmdetails";
+import {FilmDetails} from "../Model/filmDetails";
 import {forkJoin} from "rxjs";
 
 
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit{
   filmsfiltred!:Film[]
   all_ids!:number[]
   id_gender: any[] = []; // Initialize id_gender as an empty array
-  filmdetails!: Filmdetails;
+  filmdetails!: FilmDetails;
 
 
   genres: string[] = [
@@ -41,29 +41,11 @@ export class HomeComponent implements OnInit{
   constructor(private filmservice:FilmService) {
   }
   ngOnInit(): void {
-    this.getAllDatils()
-  }
-  getAllDatilss() { // get all popular movie with all detail aller retour get
-    this.filmservice.getPopularMovies().subscribe((data) => {
-      this.films = data.results;
-      this.filmsfiltred = data.results;
-      this.all_ids = this.films.map(film => film.id);
-
-      // Now that all_ids is defined, you can make the specific API call
-      if (this.all_ids.length > 0) {
-        const requests = this.all_ids.map(id => this.filmservice.getPopularMoviesById(id));
-
-        forkJoin(requests).subscribe((results) => {
-          results.forEach((result, index) => {
-            this.id_gender.push({ "idfilm": this.all_ids[index], "genre": result.genres });
-          });
-        });
-      }
-    });
+    this.getAllDetails()
   }
 
   currentPage: number=1;
-  getAllDatils() { // get all popular movie with all detail aller retour get
+  getAllDetails() { // get all popular movie with all detail aller retour get
     this.filmservice.getPopularMovies().subscribe((data) => {
       this.films = data[this.currentPage-1].results;
       this.filmsfiltred = data[this.currentPage-1].results;
@@ -85,23 +67,17 @@ export class HomeComponent implements OnInit{
   //scroll pages
   loadNextPage(): void {
     this.currentPage++;
-    this.getAllDatils();
+    this.getAllDetails();
   }
 
   loadPreviousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.getAllDatils();
+      this.getAllDetails();
     }
   }
 
 
-
-
-
-  getUrl(name : any){
-    return this.filmservice.getimagefromapi(name);
-  }
   filterResults(text: string) {
     if (!text) {
       this.filmsfiltred = this.films;
@@ -115,21 +91,8 @@ export class HomeComponent implements OnInit{
 
   isFavorite: boolean = false;
 
-  toggleFavorite() {
-    this.isFavorite = !this.isFavorite;
-  }
 
-  filterResultsGenre(genre:string) {
-    console.log(genre)
-    console.log("zlk",this.id_gender)
-
-    if (!genre) {
-      this.filmsfiltred = this.films;  // If no genre is selected, display all films
-      return;
-    }
-
-
-  }
 }
+
 
 

@@ -10,7 +10,7 @@ import { FilmService } from './Service/film.service';
 import { UsersloginService } from './Service/users.login.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { User } from './Model/user.model';
+
 @Component({
   selector: 'app-root',
   standalone: true,

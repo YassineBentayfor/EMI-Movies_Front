@@ -20,7 +20,8 @@ export class FilmService {
   extractMovieIdsFromFavorites(favoriteMovies: any[]): number[] {
     return favoriteMovies.map((favorite) => favorite.movieId);
   }
-  // Get favorite movie IDs
+
+
   getFavoriteMovieIds(): Observable<number[]> {
     return this.http.get<any[]>(`${this.favoritesUrl}/favorite`).pipe(
       map((response: any[]) => {
@@ -47,13 +48,13 @@ export class FilmService {
   }
 
 
-  // Add a movie to favorites
+
   addFavoriteMovie(movieId: number, email: string): Observable<any> {
     return this.http.post<any>(`${this.favoritesUrl}/add/${movieId}/${email}`, {});
   }
 
 
-  // Remove a movie from favorites
+
   removeFavoriteMovie(id: number): Observable<any> {
     return this.http.delete<any>(`${this.favoritesUrl}/delete/${id}`);
   }
@@ -84,14 +85,10 @@ export class FilmService {
 
   getPopularMovies(): Observable<any> {
     const requests: Observable<any>[] = [];
-
-    // Iterate over the first 8 pages
     for (let page = 1; page <= this.number_page; page++) {
       const request = this.http.get<any>(`${this.baseurl}?api_key=${this.apikey}&page=${page}`);
       requests.push(request);
     }
-
-    // Use forkJoin to make parallel requests and combine results
     return forkJoin(requests);
   }
 
@@ -114,15 +111,6 @@ export class FilmService {
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${this.apikey}&language=en-US&query=${moviePrefix}%20&page=1&include_adult=true`
     return this.http.get<any>(url).pipe(map((res: any) => res.results))
   }
-
-
-
-
-
-
-
-
-
 
 }
 

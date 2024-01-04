@@ -75,42 +75,6 @@ export class FavoritedComponent implements OnInit {
 
 
 
-
-  loadFavoriteMoviessss() {
-    console.log('Fetching favorite movie IDs...');
-    this.filmService.getFavoriteMovieIds().subscribe((ids: any[]) => {
-      console.log('Received favorite movie IDs:', ids);
-
-      const requests: Observable<any>[] = [];
-
-      for (let i = 0; i < ids.length; i++) {
-        const movieId = ids[i]; // Assuming the movieId field holds the ID
-        console.log('Fetching details for movie ID:', movieId);
-
-        const request = this.filmService.getPopularMoviesById(movieId);
-        requests.push(request);
-      }
-
-      if (requests.length > 0) {
-        forkJoin(requests).subscribe((movies: any[]) => {
-          console.log('Favorite movies details:', movies);
-
-          for (let i = 0; i < movies.length; i++) {
-            this.favoriteMovies.push(movies[i]);
-          }
-
-          console.log(this.favoriteMovies); // Verify favoriteMovies array here
-        }, error => {
-          console.error('Error fetching favorite movies details:', error);
-        });
-      } else {
-        console.log('No favorite movie IDs found.');
-      }
-    });
-  }
-
-
-
   onFavoriteRemoved(movieId: number) {
     console.log('Removing favorite movie with ID:', movieId);
 
@@ -122,16 +86,5 @@ export class FavoritedComponent implements OnInit {
       this.favoriteMovies.splice(indexToRemove, 1);
     }
   }
-
-
-
-
-
-
-
-
-
-
-
 
 }

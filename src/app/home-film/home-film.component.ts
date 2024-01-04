@@ -118,19 +118,4 @@ export class HomeFilmComponent {
   }
 
 
-  // Optionally, you can implement a method to check if the movie is a favorite and set isFavorite accordingly
-  // checkFavoriteStatus() {
-  //   this.filmService.getFavoriteMovieIds().subscribe(
-  //     (favoriteMovieIds: number[]) => {
-  //       this.isFavorite = favoriteMovieIds.includes(this.film.id);
-  //     },
-  //     (error) => {
-  //       console.error('Error retrieving favorite movie IDs:', error);
-  //       // Handle error if needed
-  //     }
-  //   );
-  // }
-
-
-
 }
