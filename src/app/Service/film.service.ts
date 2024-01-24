@@ -12,8 +12,8 @@ export class FilmService {
   baseurl = "https://api.themoviedb.org/3/discover/movie";
   apikey = "4722616a8836f0b929a9cb3a04f6a6a4";
 
-  secondBaseUrl="http://localhost:9999/Commentaire"
-  private favoritesUrl = 'http://localhost:9999/api';
+  secondBaseUrl="https://emi-movie-backend.onrender.com/Commentaire"//"http://localhost:9999/Commentaire"
+  private favoritesUrl = "https://emi-movie-backend.onrender.com/api"//'http://localhost:9999/api';
 
   number_page:number=100;
 
